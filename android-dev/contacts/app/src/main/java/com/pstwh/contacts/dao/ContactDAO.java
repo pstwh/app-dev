@@ -2,10 +2,14 @@ package com.pstwh.contacts.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.pstwh.contacts.models.Contact;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by pstwh on 27/02/2018.
@@ -14,12 +18,12 @@ import com.pstwh.contacts.models.Contact;
 public class ContactDAO extends SQLiteOpenHelper {
 
     public ContactDAO(Context context) {
-        super(context, "contacts", null, 1);
+        super(context, "contacts", null, 2);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String query = "CREATE TABLE contacts (id INTEGER PRIMARY KEY, name TEXT NOT NULL, address TEXT, telephone, TEXT, website TEXT, ratting REAL";
+        String query = "CREATE TABLE contacts (id INTEGER PRIMARY KEY, name TEXT NOT NULL, address TEXT, telephone, TEXT, website TEXT, rating REAL)";
         sqLiteDatabase.execSQL(query);
     }
 
@@ -41,5 +45,24 @@ public class ContactDAO extends SQLiteOpenHelper {
         data.put("rating", contact.getRating());
 
         sqLiteDatabase.insert("contacts", null, data);
+    }
+
+    public List<Contact> getContacts() {
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        Cursor c = sqLiteDatabase.rawQuery("SELECT * FROM contacts;", null);
+
+        List<Contact> contacts = new ArrayList<Contact>();
+        while(c.moveToNext()) {
+            Contact contact = new Contact();
+            contact.setId(c.getLong(c.getColumnIndex("id")));
+            contact.setName(c.getString(c.getColumnIndex("name")));
+            contact.setAddress(c.getString(c.getColumnIndex("address")));
+            contact.setTelephone(c.getString(c.getColumnIndex("telephone")));
+            contact.setWebsite(c.getString(c.getColumnIndex("website")));
+            contact.setRating(c.getDouble(c.getColumnIndex("rating")));
+            contacts.add(contact);
+        }
+        c.close();
+        return contacts;
     }
 }

@@ -8,6 +8,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.pstwh.contacts.dao.ContactDAO;
+import com.pstwh.contacts.models.Contact;
+
+import java.util.List;
+
 public class ContactsActivity extends AppCompatActivity {
 
     @Override
@@ -15,11 +20,7 @@ public class ContactsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts_index);
 
-        String[] contacts = {"Paulo", "Ricardo", "Pedro", "Anna"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, contacts);
-
-        ListView contactsView = (ListView) findViewById(R.id.contacts);
-        contactsView.setAdapter(adapter);
+        getContacts();
 
         Button createContact = (Button) findViewById(R.id.contacts_index_save);
         createContact.setOnClickListener(new View.OnClickListener() {
@@ -29,7 +30,22 @@ public class ContactsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getContacts();
+    }
 
+    private void getContacts() {
+        ContactDAO contactDAO = new ContactDAO(this);
+        List<Contact> contacts = contactDAO.getContacts();
+        contactDAO.close();
+
+        ArrayAdapter<Contact> adapter = new ArrayAdapter<Contact>(this, android.R.layout.simple_list_item_1, contacts);
+
+        ListView contactsView = (ListView) findViewById(R.id.contacts);
+        contactsView.setAdapter(adapter);
     }
 }

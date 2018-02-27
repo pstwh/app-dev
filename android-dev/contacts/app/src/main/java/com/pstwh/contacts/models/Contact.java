@@ -59,4 +59,9 @@ public class Contact {
     public void setRating(Double ratting) {
         this.rating = ratting;
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }
