@@ -41,11 +41,5 @@
             android:numStars="5"
             android:max="10"
             android:id="@+id/contacts_create_ratingbar"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Save"
-            android:id="@+id/contacts_create_save"/>
     </LinearLayout>
 </ScrollView>
