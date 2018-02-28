@@ -1,6 +1,8 @@
 package com.pstwh.contacts;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.provider.Browser;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -59,12 +61,27 @@ public class ContactsActivity extends AppCompatActivity {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, final ContextMenu.ContextMenuInfo menuInfo) {
-        MenuItem delete = menu.add("Deletar");
-        delete.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        final Contact contact = (Contact) contacts.getItemAtPosition(info.position);
+
+        String w = contact.getWebsite();
+        if (!w.startsWith("http://")) w = "http://"+w;
+
+        MenuItem website = menu.add("Website").setIntent(
+                new Intent(Intent.ACTION_VIEW).setData(Uri.parse(w))
+        );
+
+        MenuItem sms = menu.add("SMS").setIntent(
+                new Intent(Intent.ACTION_VIEW).setData(Uri.parse("sms:"+contact.getTelephone()))
+        );
+
+        MenuItem map = menu.add("Map").setIntent(
+                new Intent(Intent.ACTION_VIEW).setData(Uri.parse("geo:0,0?q="+contact.getAddress()))
+        );
+
+        MenuItem delete = menu.add("Delete").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-                Contact contact = (Contact) contacts.getItemAtPosition(info.position);
 
                 ContactDAO contactDAO = new ContactDAO(ContactsActivity.this);
                 contactDAO.remove(contact);
