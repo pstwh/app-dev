@@ -28,6 +28,17 @@ public class ContactsActivity extends AppCompatActivity {
 
         contacts = (ListView) findViewById(R.id.contacts);
 
+        contacts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Contact contact = (Contact) contacts.getItemAtPosition(position);
+                Intent intent = new Intent(ContactsActivity.this, ContactsCreateActivity.class);
+
+                intent.putExtra("contact", contact);
+                startActivity(intent);
+            }
+        });
+
         Button createContact = (Button) findViewById(R.id.contacts_index_save);
         createContact.setOnClickListener(new View.OnClickListener() {
             @Override

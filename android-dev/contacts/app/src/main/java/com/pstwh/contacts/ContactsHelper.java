@@ -15,6 +15,7 @@ public class ContactsHelper {
     private EditText telephoneField;
     private EditText websiteField;
     private RatingBar ratingField;
+    private Contact contact;
 
     public ContactsHelper(ContactsCreateActivity activity) {
         this.nameField = (EditText) activity.findViewById(R.id.contacts_create_name);
@@ -22,6 +23,7 @@ public class ContactsHelper {
         this.telephoneField = (EditText) activity.findViewById(R.id.contacts_create_telephone);
         this.websiteField = (EditText) activity.findViewById(R.id.contacts_create_website);
         this.ratingField = (RatingBar) activity.findViewById(R.id.contacts_create_ratingbar);
+        this.contact = new Contact();
     }
 
     public Contact getContact() {
@@ -33,5 +35,14 @@ public class ContactsHelper {
         contact.setRating(Double.valueOf(ratingField.getProgress()));
 
         return contact;
+    }
+
+    public void fillContact(Contact contact) {
+        this.nameField.setText(contact.getName());
+        this.addressField.setText(contact.getAddress());
+        this.telephoneField.setText(contact.getTelephone());
+        this.websiteField.setText(contact.getWebsite());
+        this.ratingField.setProgress(contact.getRating().intValue());
+        this.contact = contact;
     }
 }

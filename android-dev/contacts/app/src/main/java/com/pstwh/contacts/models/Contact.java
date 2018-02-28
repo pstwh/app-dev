@@ -1,10 +1,12 @@
 package com.pstwh.contacts.models;
 
+import java.io.Serializable;
+
 /**
  * Created by pstwh on 27/02/2018.
  */
 
-public class Contact {
+public class Contact implements Serializable {
     private Long id;
     private String name;
     private String address;

@@ -1,5 +1,6 @@
 package com.pstwh.contacts;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -22,6 +23,12 @@ public class ContactsCreateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contacts_create);
 
         this.helper = new ContactsHelper(this);
+
+        Intent intent = getIntent();
+        Contact contact = (Contact) intent.getSerializableExtra("contact");
+        if (contact != null) {
+            helper.fillContact(contact);
+        }
     }
 
     @Override
