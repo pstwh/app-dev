@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.NonNull;
 
 import com.pstwh.contacts.models.Contact;
 
@@ -37,14 +38,20 @@ public class ContactDAO extends SQLiteOpenHelper {
     public void create(Contact contact) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
+        ContentValues data = getContact(contact);
+
+        sqLiteDatabase.insert("contacts", null, data);
+    }
+
+    @NonNull
+    private ContentValues getContact(Contact contact) {
         ContentValues data = new ContentValues();
         data.put("name", contact.getName());
         data.put("address", contact.getAddress());
         data.put("telephone", contact.getTelephone());
         data.put("website", contact.getWebsite());
         data.put("rating", contact.getRating());
-
-        sqLiteDatabase.insert("contacts", null, data);
+        return data;
     }
 
     public void remove(Contact contact) {
@@ -71,5 +78,14 @@ public class ContactDAO extends SQLiteOpenHelper {
         }
         c.close();
         return contacts;
+    }
+
+    public void update(Contact contact) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+
+        ContentValues data = getContact(contact);
+
+        String[] params = {contact.getId().toString()};
+        sqLiteDatabase.update("contacts", data,"id = ?", params);
     }
 }

@@ -22,7 +22,7 @@ public class ContactsCreateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts_create);
 
-        this.helper = new ContactsHelper(this);
+        helper = new ContactsHelper(this);
 
         Intent intent = getIntent();
         Contact contact = (Contact) intent.getSerializableExtra("contact");
@@ -46,7 +46,11 @@ public class ContactsCreateActivity extends AppCompatActivity {
                 Contact contact = helper.getContact();
                 ContactDAO contactDAO = new ContactDAO(this);
 
-                contactDAO.create(contact);
+                if(contact.getId() != null) {
+                    contactDAO.update(contact);
+                } else {
+                    contactDAO.create(contact);
+                }
                 contactDAO.close();
 
                 Toast.makeText(ContactsCreateActivity.this, "Contact saved", Toast.LENGTH_SHORT).show();

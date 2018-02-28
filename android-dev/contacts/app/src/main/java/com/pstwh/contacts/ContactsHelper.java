@@ -15,19 +15,19 @@ public class ContactsHelper {
     private EditText telephoneField;
     private EditText websiteField;
     private RatingBar ratingField;
+
     private Contact contact;
 
     public ContactsHelper(ContactsCreateActivity activity) {
-        this.nameField = (EditText) activity.findViewById(R.id.contacts_create_name);
-        this.addressField = (EditText) activity.findViewById(R.id.contacts_create_address);
-        this.telephoneField = (EditText) activity.findViewById(R.id.contacts_create_telephone);
-        this.websiteField = (EditText) activity.findViewById(R.id.contacts_create_website);
-        this.ratingField = (RatingBar) activity.findViewById(R.id.contacts_create_ratingbar);
-        this.contact = new Contact();
+        nameField = (EditText) activity.findViewById(R.id.contacts_create_name);
+        addressField = (EditText) activity.findViewById(R.id.contacts_create_address);
+        telephoneField = (EditText) activity.findViewById(R.id.contacts_create_telephone);
+        websiteField = (EditText) activity.findViewById(R.id.contacts_create_website);
+        ratingField = (RatingBar) activity.findViewById(R.id.contacts_create_ratingbar);
+        contact = new Contact();
     }
 
     public Contact getContact() {
-        Contact contact = new Contact();
         contact.setName(nameField.getText().toString());
         contact.setAddress(addressField.getText().toString());
         contact.setTelephone(telephoneField.getText().toString());
@@ -38,11 +38,11 @@ public class ContactsHelper {
     }
 
     public void fillContact(Contact contact) {
-        this.nameField.setText(contact.getName());
-        this.addressField.setText(contact.getAddress());
-        this.telephoneField.setText(contact.getTelephone());
-        this.websiteField.setText(contact.getWebsite());
-        this.ratingField.setProgress(contact.getRating().intValue());
+        nameField.setText(contact.getName());
+        addressField.setText(contact.getAddress());
+        telephoneField.setText(contact.getTelephone());
+        websiteField.setText(contact.getWebsite());
+        ratingField.setProgress(contact.getRating().intValue());
         this.contact = contact;
     }
 }
