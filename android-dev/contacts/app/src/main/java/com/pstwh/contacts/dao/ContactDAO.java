@@ -47,6 +47,13 @@ public class ContactDAO extends SQLiteOpenHelper {
         sqLiteDatabase.insert("contacts", null, data);
     }
 
+    public void remove(Contact contact) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+
+        String [] params = {String.valueOf(contact.getId())};
+        sqLiteDatabase.delete("contacts", "id = ?", params);
+    }
+
     public List<Contact> getContacts() {
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
         Cursor c = sqLiteDatabase.rawQuery("SELECT * FROM contacts;", null);
