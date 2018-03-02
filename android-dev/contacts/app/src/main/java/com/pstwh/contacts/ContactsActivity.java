@@ -79,6 +79,10 @@ public class ContactsActivity extends AppCompatActivity {
                 new Intent(Intent.ACTION_VIEW).setData(Uri.parse("geo:0,0?q="+contact.getAddress()))
         );
 
+        MenuItem call = menu.add("Call").setIntent(
+                new Intent(Intent.ACTION_CALL).setData(Uri.parse("tel:"+contact.getTelephone()))
+        );
+
         MenuItem delete = menu.add("Delete").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {

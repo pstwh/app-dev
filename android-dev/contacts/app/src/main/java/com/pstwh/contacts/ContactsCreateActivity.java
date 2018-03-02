@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.pstwh.contacts.dao.ContactDAO;
@@ -20,7 +18,7 @@ public class ContactsCreateActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contacts_create);
+        setContentView(R.layout.activity_contacts_form);
 
         helper = new ContactsHelper(this);
 
